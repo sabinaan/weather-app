@@ -1,12 +1,24 @@
 
 
 div {
-    margin-right: 20px;
+    margin: 10px;
+}
+
+.wraper{
+  /*  display:block;*/
 }
 
 #content {
-    width: 600px;
+    width: 300px;
     margin:auto;
-    display: flex;
-    flex-wrap: wrap;
+    margin-top: 30px;
+    /*display: flex;
+    flex-wrap: wrap;*/
+}
+
+#error-msg{
+    height:30px;
+    color: red;
+    visibility: hidden;
+    margin-left: 0px;
 }

@@ -1,17 +1,39 @@
+const errorMsg = document.querySelector("#error-msg")
 
-async function getWeatherData(location){
-    
-    let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=a11f6ec183570041115399586e272aa0`, {
-        mode: 'cors'
-      })
-    let data = await response.json()
-    return data
+async function showWeather(location, unit){
+
+    try{
+        //Fetch weather data and makes it readable
+        let dataObject = await getWeatherData(location)
+        if(dataObject.cod == 200){
+            //Process data into an object with the information we need
+            let weatherObject = await getWeatherObject(dataObject)
+            //Display weather data in the DOM
+            showWeatherData(weatherObject, unit)
+            //Everything is well hide error msg
+            hideErrorMsg()
+        }else{
+            showErrorMsg(dataObject, location)
+        }
+
+    }catch(err){
+            console.log(err)
+
+    }
 
 }
 
-async function getWeatherObject(location){
-    let weatherObject = await getWeatherData(location);
-    console.log(weatherObject)
+
+async function getWeatherData(location){
+    let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=a11f6ec183570041115399586e272aa0`, {
+        mode: 'cors'
+        })
+    let data = await response.json()
+    return data
+}
+
+async function getWeatherObject(weatherObject){
+    
     let dateString = convertUNIXtolocal(weatherObject.dt,weatherObject.timezone)
 
     let resultObject = {
@@ -27,8 +49,8 @@ async function getWeatherObject(location){
 
 }
 
-async function showWeatherData(location,unit){
-    let weatherObject = await getWeatherObject(location)
+function showWeatherData(weatherObject,unit){
+
     let feels
     let temp
 
@@ -47,6 +69,26 @@ async function showWeatherData(location,unit){
     document.querySelector("#feels").innerHTML = "feels like " + feels
     document.querySelector("#icon").src = "http://openweathermap.org/img/wn/" + weatherObject.icon + "@2x.png"
 
+}
+
+//Eventlistener for the form submission
+document.querySelector("#search-form").addEventListener("submit",(e) => {
+    e.preventDefault()
+    let searchValue = document.querySelector("#search-input").value
+    if (searchValue){
+        showWeather(searchValue,"C")
+    }
+    
+})
+
+let showErrorMsg = function(request, city){
+    errorMsg.innerHTML = "There was an error accessing the weather data for " +  city + ": " + request.cod +": "+ request.message
+    errorMsg.style.visibility = "visible"
+}
+
+let hideErrorMsg = function(){
+    errorMsg.innerHTML = ""
+    errorMsg.style.visibility = "hidden"
 }
 
 
@@ -75,5 +117,5 @@ let tempInF = function(kelvinTemp){
     return farenheit
 }
 
-showWeatherData("södertälje","C")
+showWeather("södertälje","C")
 
