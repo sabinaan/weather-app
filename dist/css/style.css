@@ -4,6 +4,14 @@ div {
     margin: 10px;
 }
 
+.tempF {
+    display:block;
+}
+
+.tempC {
+    display:none;
+}
+
 .wraper{
   /*  display:block;*/
 }
