@@ -8,10 +8,8 @@ async function showWeather(location, unit){
         //Fetch weather data
         let dataObject = await getWeatherData(location)
         if(dataObject.cod == 200){
-            console.log(dataObject)
             //Process data into an object with the information we need
             let weatherObject = await getWeatherObject(dataObject)
-            console.log("weather object created")
             //Add the weather data to the page
             showWeatherData(weatherObject, unit)
             hideErrorMsg()

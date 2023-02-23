@@ -1,5 +1,5 @@
 import {showWeather} from "./APIfunctions"
 
 
-showWeather("södertälje","C")
+showWeather("stockholm","C")
 
