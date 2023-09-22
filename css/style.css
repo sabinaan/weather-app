@@ -1,0 +1,26 @@
+
+
+div {
+    margin: 10px;
+}
+
+.tempF {
+    display:block;
+}
+
+.tempC {
+    display:none;
+}
+
+#content {
+    width: 300px;
+    margin:auto;
+    margin-top: 30px;
+}
+
+#error-msg{
+    height:30px;
+    color: red;
+    visibility: hidden;
+    margin-left: 0px;
+}
